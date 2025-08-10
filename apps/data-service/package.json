@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"stage:deploy": "wrangler deploy --env stage",
+		"production:deploy": "wrangler deploy --env production",
 		"dev": "wrangler dev --x-remote-bindings",
 		"start": "wrangler dev",
 		"test": "vitest",
@@ -15,7 +16,7 @@
 		"@types/node": "^22.15.19",
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
-		"wrangler": "^4.24.3"
+		"wrangler": "^4.28.1"
 	},
 	"dependencies": {
 		"@repo/data-ops": "workspace:*",

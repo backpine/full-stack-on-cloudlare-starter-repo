@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "vite --port 3000 --mode development",
     "start": "vite --port 3000",
-    "build": "vite build && tsc",
+    "build": "vite build --mode development && tsc",
+    "production:build": "vite build --mode production && tsc",
     "serve": "vite preview",
     "test": "vitest run",
     "cf-typegen": "wrangler types --env-interface Env --env stage",
-    "stage:deploy": "npm run build && wrangler deploy"
+    "stage:deploy": "npm run build && wrangler deploy",
+    "production:deploy": "npm run production:build && wrangler deploy"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.32.2",
@@ -68,7 +70,7 @@
     "zustand": "^5.0.6"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.9.5",
+    "@cloudflare/vite-plugin": "^1.11.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/react": "^19.1.8",
@@ -82,6 +84,5 @@
     "vitest": "^3.2.4",
     "web-vitals": "^4.2.4",
     "wrangler": "^4.28.1"
-
   }
 }

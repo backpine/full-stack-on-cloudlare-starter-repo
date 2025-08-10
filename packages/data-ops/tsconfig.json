@@ -17,5 +17,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "auth-gen"]
 }

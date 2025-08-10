@@ -13,6 +13,12 @@
 	},
 	"env": {
 		"stage": {
+			"routes": [
+				{
+					"zone_name": "smrtlk.com",
+					"pattern": "stage.smrtlk.com/r/*"
+				}
+			],
 			"browser": {
 				"binding": "VIRTUAL_BROWSER",
 			},
@@ -64,6 +70,90 @@
 				{
 					"binding": "DESTINATION_EVALUATION_WORKFLOW",
 					"name": "destination-evaluation-workflow",
+					"class_name": "DestinationEvaluationWorkflow"
+				}
+			],
+			"durable_objects": {
+				"bindings": [
+					{
+						"class_name": "LinkClickTracker",
+						"name": "LINK_CLICK_TRACKER_OBJECT"
+					},
+					{
+						"name": "EVALUATION_SCHEDULAR",
+						"class_name": "EvaluationScheduler"
+					},
+				
+				]
+			},
+			"migrations": [
+				{
+					"tag": "v1",
+					"new_classes": ["EvaluationScheduler"],
+		
+				},
+				{
+					"tag": "v2",
+					"new_sqlite_classes": ["LinkClickTracker"]
+				},
+			]
+		},
+		"production": {
+			"routes": [
+				{
+					"zone_name": "smrtlk.com",
+					"pattern": "smrtlk.com/r/*"
+				}
+			],
+			"browser": {
+				"binding": "VIRTUAL_BROWSER",
+			},
+			"ai": {
+				"binding": "AI",
+			},
+			"r2_buckets": [
+				{
+					"binding": "BUCKET",
+					"bucket_name": "smart-links-eval-production",
+		
+				}
+			],
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_id": "cdecc784-37f7-4c46-bf09-9a6bdad9452e",
+				  }
+				
+			],
+			"kv_namespaces": [
+				{
+					"binding": "CACHE",
+					"id": "c39799a775b648e59b8fdc1e7395170b",
+				}
+			],
+			"queues": {
+				"consumers": [
+					{
+						"queue": "smart-links-data-queue-production",
+						"dead_letter_queue": "smart-links-data-dead-letter-production"
+		
+					},
+					{
+						"queue": "smart-links-data-dead-letter-production",
+						"retry_delay": 0
+					}
+				],
+				"producers": [
+					{
+						"binding": "QUEUE",
+						"queue": "smart-links-data-queue-production",
+					}
+				]
+			},
+			"workflows": [
+				{
+					"binding": "DESTINATION_EVALUATION_WORKFLOW",
+					"name": "destination-evaluation-workflow-production",
 					"class_name": "DestinationEvaluationWorkflow"
 				}
 			],

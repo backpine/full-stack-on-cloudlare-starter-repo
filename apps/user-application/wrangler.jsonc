@@ -6,16 +6,24 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "user-application",
   "main": "worker/index.ts",
-  "compatibility_date": "2025-06-17",
+  "compatibility_date": "2025-08-09",
   "assets": {
+    "directory": "./dist/",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/trpc/*", "/click-socket"],
   },
   "observability": {
     "enabled": true,
   },
   "env": {
     "stage": {
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "stage.smrtlk.com",
+        },
+      ],
       "d1_databases": [
         {
           "binding": "DB",
@@ -29,7 +37,29 @@
           "service": "data-service-stage",
           "experimental_remote": true,
         },
-      ]
-    }
-  }
+      ],
+    },
+    "production": {
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "smrtlk.com",
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "cdecc784-37f7-4c46-bf09-9a6bdad9452e",
+          "experimental_remote": true,
+        },
+      ],
+      "services": [
+        {
+          "binding": "BACKEND_SERVICE",
+          "service": "data-service-production",
+          "experimental_remote": true,
+        },
+      ],
+    },
+  },
 }

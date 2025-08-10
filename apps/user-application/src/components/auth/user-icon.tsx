@@ -9,29 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import { useState } from "react";
-
-// Mock authClient with dummy data
-const authClient = {
-  useSession: () => ({
-    data: {
-      user: {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        image: "https://github.com/shadcn.png",
-      },
-    },
-    isPending: false,
-  }),
-  signOut: async ({
-    fetchOptions,
-  }: {
-    fetchOptions: { onSuccess: () => void };
-  }) => {
-    // Simulate async operation
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    fetchOptions.onSuccess();
-  },
-};
+import { authClient } from "./client";
+import { useNavigate } from "@tanstack/react-router";
 
 type UserProfilePopupProps = {
   data: Awaited<ReturnType<typeof authClient.useSession>>["data"];
@@ -40,13 +19,14 @@ type UserProfilePopupProps = {
 
 function UserProfilePopup({ data, children }: UserProfilePopupProps) {
   const [loading, setLoading] = useState(false);
+  const nav = useNavigate();
 
   const handleLogout = async () => {
     setLoading(true);
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          window.location.reload();
+          nav({ to: "/" });
         },
       },
     });

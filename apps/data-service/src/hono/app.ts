@@ -25,7 +25,7 @@ App.get('/click-socket', async (c) => {
 })
 
 
-App.get('/:id', async (c) => {
+App.get('/r/:id', async (c) => {
     const id = c.req.param('id');
 
     const linkInfo = await getRoutingDestinations(c.env, id)
