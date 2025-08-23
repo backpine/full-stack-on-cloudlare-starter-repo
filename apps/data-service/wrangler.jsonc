@@ -36,5 +36,24 @@
 				"queue": "smart-links-data-queue-stage"
 			}
 		]
-	}
+	},
+	"workflows": [
+		{
+			"binding": "DESTINATION_EVALUATION_WORKFLOW",
+			"name": "destination-evaluation-workflow",
+			"class_name": "DestinationEvaluationWorkflow"
+		}
+	],
+	"browser": {
+		"binding": "VIRTUAL_BROWSER"
+	},
+	"ai": {
+		"binding": "AI"
+	},
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "smart-links-eval-stage"
+		}
+	]
 }
