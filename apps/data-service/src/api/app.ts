@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { cloudflareInfoSchema } from '@repo/data-ops/zod-schema/links';
 import { LinkClickMessageType } from '@repo/data-ops/zod-schema/queue';
 import { getDestinationForCountry, getRoutingDestinations } from '@/helpers/route-ops';
+import { EvaluationScheduler } from '@/durable-objects/evaluation-scheduler';
 
 export const App = new Hono<{ Bindings: Env }>();
 
