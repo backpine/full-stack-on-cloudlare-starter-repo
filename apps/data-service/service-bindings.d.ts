@@ -1,1 +1,9 @@
-interface Env extends Cloudflare.Env {}
+interface DestinationEvaluationParams {
+	linkId: string;
+	destinationUrl: string;
+	accountId: string;
+}
+
+interface Env extends Cloudflare.Env {
+	DESTINATION_EVALUATION_WORKFLOW: Workflow<DestinationEvaluationParams>;
+}

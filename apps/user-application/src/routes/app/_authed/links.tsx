@@ -30,14 +30,14 @@ export const Route = createFileRoute("/app/_authed/links")({
   component: RouteComponent,
   loader: async ({ context }) => {
     await context.queryClient.prefetchQuery(
-      context.trpc.links.linkList.queryOptions({}),
+      context.trpc.links.linkList.queryOptions({})
     );
   },
 });
 
 function RouteComponent() {
   const { data: links } = useSuspenseQuery(
-    trpc.links.linkList.queryOptions({}),
+    trpc.links.linkList.queryOptions({})
   );
   const nav = useNavigate();
 
@@ -52,6 +52,26 @@ function RouteComponent() {
   };
 
   const columns = [
+    columnHelper.accessor("linkId", {
+      header: "ID",
+      cell: (info) => (
+        <div className="pl-4 flex items-center gap-1">
+          {info.getValue()}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              copyToClipboard(
+                info.getValue()
+              );
+            }}
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
+        </div>
+      ),
+    }),
     columnHelper.accessor("name", {
       header: "Name",
       cell: (info) => <div className="pl-4">{info.getValue()}</div>,
@@ -59,15 +79,19 @@ function RouteComponent() {
     columnHelper.accessor("linkId", {
       header: "Link",
       cell: (info) => (
-        <div className="flex items-center gap-2">
-          <span className="truncate max-w-[200px]">{`https://${import.meta.env.VITE_BACKEND_HOST}/${info.getValue()}`}</span>
+        <div className="flex items-center gap-1">
+          <span className="truncate max-w-[200px]">{`https://${
+            import.meta.env.VITE_BACKEND_HOST
+          }/${info.getValue()}`}</span>
           <Button
             variant="ghost"
             size="sm"
             onClick={(e) => {
               e.stopPropagation();
               copyToClipboard(
-                `https://${import.meta.env.VITE_BACKEND_HOST}/${info.getValue()}`,
+                `https://${
+                  import.meta.env.VITE_BACKEND_HOST
+                }/${info.getValue()}`
               );
             }}
           >
@@ -108,7 +132,7 @@ function RouteComponent() {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                   </TableHead>
                 ))}
@@ -134,7 +158,7 @@ function RouteComponent() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -163,7 +187,7 @@ function RouteComponent() {
           {Math.min(
             (table.getState().pagination.pageIndex + 1) *
               table.getState().pagination.pageSize,
-            table.getFilteredRowModel().rows.length,
+            table.getFilteredRowModel().rows.length
           )}{" "}
           of {table.getFilteredRowModel().rows.length} entries
         </div>

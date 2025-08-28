@@ -8,8 +8,9 @@
     "build": "vite build && tsc",
     "serve": "vite preview",
     "test": "vitest run",
-    "cf-typegen": "wrangler types --env-interface Env",
-    "deploy": "npm run build && wrangler deploy"
+    "cf-typegen": "wrangler types --env-interface Env --env stage",
+    "stage:deploy": "CLOUDFLARE_ENV=stage npm run build && wrangler deploy",
+    "deploy": "CLOUDFLARE_ENV=production npm run build && wrangler deploy"
   },
   "dependencies": {
     "@better-auth/stripe": "1.3.4",
