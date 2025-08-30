@@ -5,7 +5,8 @@
   "scripts": {
     "build-package": "pnpm --filter @repo/data-ops run build",
     "dev-frontend": "pnpm --filter user-application run dev",
-    "dev-data-service": "pnpm --filter data-service run dev"
+    "dev-data-service": "pnpm --filter data-service run dev",
+    "deploy-frontend:stage": "pnpm run build-package && pnpm --filter user-application run deploy:stage"
   },
   "keywords": [],
   "author": "",
