@@ -9,23 +9,43 @@
   "compatibility_date": "2025-06-17",
   "assets": {
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
+    "not_found_handling": "single-page-application"
   },
   "observability": {
     "enabled": true
   },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_id": "2c4091cc-0b34-4377-9796-149857110da6",
-      "experimental_remote": true
+  "env": {
+    "stage": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "2c4091cc-0b34-4377-9796-149857110da6",
+          "experimental_remote": true
+        }
+      ],
+      "services": [
+        {
+          "binding": "BACKEND_SERVICE",
+          "service": "data-service-stage",
+          "experimental_remote": true
+        }
+      ]
+    },
+    "production": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "2f3b6a5d-c50b-4ce7-95d9-3ed6f63a1b0d",
+          "experimental_remote": true
+        }
+      ],
+      "services": [
+        {
+          "binding": "BACKEND_SERVICE",
+          "service": "data-service-prod",
+          "experimental_remote": true
+        }
+      ]
     }
-  ],
-  "services": [
-    {
-      "binding": "BACKEND_SERVICE",
-      "service": "data-service",
-      "experimental_remote": true
-    }
-  ]
+  }
 }
