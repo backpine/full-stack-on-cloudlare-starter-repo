@@ -51,7 +51,6 @@
     "@cloudflare/workers-types": "^4.20250405.0",
     "@types/node": "^22.15.19",
     "drizzle-kit": "^0.31.1",
-    "tsc": "^2.0.4",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.2",
     "wrangler": "^4.22.0"
