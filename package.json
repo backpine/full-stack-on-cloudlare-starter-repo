@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "install-dep":"pnpm add -D tsc",
+    "install-dep":"pnpm add -D tsc -w",
     "build-package": "pnpm --filter @repo/data-ops run build",
     "dev-frontend": "pnpm --filter user-application run dev",
     "build-frontend": "pnpm --filter @repo/data-ops run build && pnpm --filter @repo/user-application run build",
