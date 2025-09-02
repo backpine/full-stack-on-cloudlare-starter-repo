@@ -5,10 +5,10 @@
   "scripts": {
     "build-package": "pnpm --filter @repo/data-ops run build",
     "dev-frontend": "pnpm --filter user-application run dev",
-    "build-frontend": "npm run build-pacakge && pnpm --filter @repo/user-application run build",
+    "build-frontend": "npm run build-package && pnpm --filter @repo/user-application run build",
     "deploy-frontend": "pnpm --filter @repo/user-application run deploy",
     "dev-data-service": "pnpm --filter @repo/data-service run dev",
-    "build-data-service": "npm run build-pacakge && pnpm --filter @repo/data-service run build",
+    "build-data-service": "npm run build-package && pnpm --filter @repo/data-service run build",
     "deploy-data-service": "pnpm --filter @repo/data-service run deploy"
   },
   "keywords": [],
