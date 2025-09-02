@@ -317,9 +317,6 @@ importers:
       drizzle-kit:
         specifier: ^0.31.1
         version: 0.31.4
-      tsc:
-        specifier: ^2.0.4
-        version: 2.0.4
       tsc-alias:
         specifier: ^1.8.16
         version: 1.8.16
