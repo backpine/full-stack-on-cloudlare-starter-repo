@@ -4,11 +4,13 @@
 	"private": true,
 	"scripts": {
 		"@repo/data-ops": "workspace:*",
-		"deploy": "wrangler deploy",
+		"deploy": "wrangler deploy --env $CF_ENVIRONMENT",
+		"build": "rm ./worker-configuration.d.ts && npm run cf-typegen",
 		"dev": "wrangler dev --x-remote-bindings",
 		"start": "wrangler dev",
 		"test": "vitest",
-		"cf-typegen": "wrangler types --env-interface BaseEnv"
+		"migrate:init": "wrangler d1 export DB --output=dump.sql --env stage --remote",
+		"cf-typegen": "wrangler types --env-interface BaseEnv --env $CF_ENVIRONMENT"
 	},
 	"devDependencies": {
 		"@cloudflare/puppeteer": "^1.0.3",
@@ -16,7 +18,7 @@
 		"@types/node": "^22.15.19",
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
-		"wrangler": "^4.24.3"
+		"wrangler": "^4.33.0"
 	},
 	"dependencies": {
 		"@repo/data-ops": "workspace:*",
