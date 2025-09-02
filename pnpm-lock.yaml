@@ -48,6 +48,9 @@ importers:
       '@types/node':
         specifier: ^22.15.19
         version: 22.15.33
+      tsc:
+        specifier: ^2.0.4
+        version: 2.0.4
       typescript:
         specifier: ^5.5.2
         version: 5.8.3
@@ -250,6 +253,9 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      tsc:
+        specifier: ^2.0.4
+        version: 2.0.4
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -311,6 +317,9 @@ importers:
       drizzle-kit:
         specifier: ^0.31.1
         version: 0.31.4
+      tsc:
+        specifier: ^2.0.4
+        version: 2.0.4
       tsc-alias:
         specifier: ^1.8.16
         version: 1.8.16
