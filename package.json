@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "install-dep":"pnpm i",
     "build-package": "pnpm --filter @repo/data-ops run build",
     "dev-frontend": "pnpm --filter user-application run dev",
-    "dev-data-service": "pnpm --filter data-service run dev"
+    "build-frontend": "pnpm --filter @repo/data-ops run build",
+    "deploy-frontend": "pnpm --filter user-application run deploy",
+    "dev-data-service": "pnpm --filter data-service run dev",
+    "build-data-service": "pnpm --filter data-service run build",
+    "deploy-data-service": "pnpm --filter data-service run deploy"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.15.19",
+    "tsc": "^2.0.4",
     "typescript": "^5.9.2"
   }
 }

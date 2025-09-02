@@ -8,7 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 export const formatRelativeTime = (timestamp: string) => {
   const now = new Date();
   const clickedTime = new Date(timestamp);
-  console.log(clickedTime);
   const diffInSeconds = Math.floor(
     (now.getTime() - clickedTime.getTime()) / 1000,
   );

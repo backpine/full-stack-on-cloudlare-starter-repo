@@ -119,26 +119,7 @@ export const LAST_30_DAYS_BY_COUNTRY: {
   },
 ];
 
-export const LINK_LIST = [
-  {
-    destinations: 6,
-    linkId: "dAd5d",
-    created: "2024-01-10T09:15:30Z",
-    name: "Amazon Bluetooth Headphones",
-  },
-  {
-    destinations: 4,
-    linkId: "eFg6e",
-    created: "2024-01-12T14:22:45Z",
-    name: "Apple AirPods",
-  },
-  {
-    destinations: 5,
-    linkId: "fHj7f",
-    created: "2024-01-11T11:08:12Z",
-    name: "Samsung Galaxy Buds",
-  },
-];
+
 
 export const EVALUATION_ISSUES: {
   id: string;

@@ -37,7 +37,6 @@ export const Route = createFileRoute("/app/_authed/")({
 
 function RouteComponent() {
   const { isConnected } = useClickSocket();
-
   return (
     <div className="flex w-full min-w-0">
       <main className="flex-1 min-w-0">
