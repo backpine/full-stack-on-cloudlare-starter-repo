@@ -3,12 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3000 --mode development",
+    "dev": "vite --port 3001 --mode development",
     "start": "vite --port 3000",
     "build": "rm ./worker-configuration.d.ts && npm run cf-typegen && vite build --mode $CLOUDFLARE_ENV && tsc",
+    "build:local": "vite build --mode development && tsc",
     "serve": "vite preview",
     "test": "vitest run",
     "cf-typegen": "wrangler types --env-interface Env --env $CLOUDFLARE_ENV",
+    "cf-typegen:local": "wrangler types --env-interface Env --env stage",
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
@@ -77,7 +79,7 @@
     "@types/react-simple-maps": "^3.0.6",
     "@vitejs/plugin-react": "^4.6.0",
     "jsdom": "^26.1.0",
-    "tsc": "^2.0.4",
+    "tsc-alias": "^1.8.16",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4",

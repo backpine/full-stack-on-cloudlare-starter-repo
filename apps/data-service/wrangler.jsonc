@@ -114,6 +114,7 @@
 			},
 			"d1_databases": [
 				{
+					"database_name": "smart-links-production",
 					"binding": "DB",
 					"database_id": "f69f2ef3-0bbb-4560-9219-23b734258c7c",
 				}

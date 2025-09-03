@@ -8,28 +8,28 @@
     "migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "generate": "drizzle-kit generate --config drizzle.config.ts",
     "studio": "drizzle-kit studio --config drizzle.config.ts",
-    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts"
+    "better-auth-generate": "npx @better-auth/cli generate --config auth-gen/auth.ts --output=src/drizzle-out/auth-schema"
   },
   "exports": {
     "./database": {
-      "types": "./dist/db/database.d.ts",
-      "default": "./dist/db/database.js"
+      "types": "./dist/src/db/database.d.ts",
+      "default": "./dist/src/db/database.js"
     },
     "./queries/*": {
-      "types": "./dist/queries/*.d.ts",
-      "default": "./dist/queries/*.js"
+      "types": "./dist/src/queries/*.d.ts",
+      "default": "./dist/src/queries/*.js"
     },
     "./zod-schema/*": {
-      "types": "./dist/zod/*.d.ts",
-      "default": "./dist/zod/*.js"
+      "types": "./dist/src/zod/*.d.ts",
+      "default": "./dist/src/zod/*.js"
     },
     "./durable-objects-helpers": {
-      "types": "./dist/durable-objects-helpers/*.d.ts",
-      "default": "./dist/durable-objects-helpers/*.js"
+      "types": "./dist/src/durable-objects-helpers/*.d.ts",
+      "default": "./dist/src/durable-objects-helpers/*.js"
     },
     "./auth": {
-      "types": "./dist/better-auth/auth.d.ts",
-      "default": "./dist/better-auth/auth.js"
+      "types": "./dist/src/auth.d.ts",
+      "default": "./dist/src/auth.js"
     }
   },
   "keywords": [],

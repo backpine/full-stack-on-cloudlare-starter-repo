@@ -10,23 +10,9 @@ import { Separator } from "@/components/ui/separator";
 import { siGoogle } from "simple-icons";
 
 import { useState } from "react";
+import { authClient } from "./client";
 
 // Mock authClient with dummy data
-const authClient = {
-  signIn: {
-    social: async ({
-      provider,
-      callbackURL,
-    }: {
-      provider: string;
-      callbackURL: string;
-    }) => {
-      // Simulate async operation
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Fake Action", provider, callbackURL);
-    },
-  },
-};
 
 interface LoginPopupProps {
   children: React.ReactNode;

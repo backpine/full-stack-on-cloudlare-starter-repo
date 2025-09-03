@@ -3,14 +3,16 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
+		"login": "wrangler login",
 		"@repo/data-ops": "workspace:*",
 		"deploy": "wrangler deploy --env $CF_ENVIRONMENT",
 		"build": "rm ./worker-configuration.d.ts && npm run cf-typegen",
 		"dev": "wrangler dev --x-remote-bindings",
 		"start": "wrangler dev",
 		"test": "vitest",
-		"migrate:init": "wrangler d1 export DB --output=dump.sql --env stage --remote",
-		"cf-typegen": "wrangler types --env-interface BaseEnv --env $CF_ENVIRONMENT"
+		"migrate": "wrangler d1 execute smart-links-stage --file /Users/alazargenene/code/cloudflare-learning/full-stack-on-cloudlare-starter-repo/packages/data-ops/src/drizzle-out/0002_smiling_onslaught.sql --remote",
+		"cf-typegen": "wrangler types --env-interface BaseEnv --env $CF_ENVIRONMENT",
+		"cf-typegen:local": "wrangler types --env-interface BaseEnv --env production"
 	},
 	"devDependencies": {
 		"@cloudflare/puppeteer": "^1.0.3",
@@ -19,7 +21,7 @@
 		"tsc": "^2.0.4",
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
-		"wrangler": "^4.33.0"
+		"wrangler": "^4.33.2"
 	},
 	"dependencies": {
 		"@repo/data-ops": "workspace:*",
