@@ -2,7 +2,7 @@ import { getDb } from "@/db/database";
 import { linkClicks, links } from "@/drizzle-out/schema";
 import { CreateLinkSchemaType, destinationsSchema, DestinationsSchemaType, linkSchema } from "@/zod/links";
 import { LinkClickMessageType } from "@/zod/queue";
-import { and, desc, eq, gt } from "drizzle-orm";
+import { and, count, desc, eq, gt, max, sql } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 export async function createLink(  data: CreateLinkSchemaType & { accountId: string },
@@ -112,4 +112,145 @@ export async function getLinks(accountId: string, createdBefore?: string) {
       latitude: info.latitude,
       longitude: info.longitude,
     });
+  }
+
+  export async function activeLinksLastHour(accountId: string) {
+    const db = getDb();
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+  
+    const result = await db
+      .select({
+        name: links.name,
+        linkId: links.linkId,
+        clickCount: count(linkClicks.id).as("clickCount"),
+        lastClicked: max(linkClicks.clickedTime),
+      })
+      .from(linkClicks)
+      .innerJoin(links, eq(linkClicks.id, links.linkId))
+      .where(
+        and(
+          gt(linkClicks.clickedTime, oneHourAgo.toISOString()),
+          eq(linkClicks.accountId, accountId),
+        ),
+      )
+      .groupBy(linkClicks.id)
+      .orderBy(desc(sql`clickCount`))
+      .limit(10);
+  
+    return result;
+  }
+
+  export async function totalLinkClickLastHour(
+    accountId: string,
+  ): Promise<number> {
+    const db = getDb();
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+  
+    const result = await db
+      .select({
+        count: count(),
+      })
+      .from(linkClicks)
+      .where(
+        and(
+          gt(linkClicks.clickedTime, oneHourAgo.toISOString()),
+          eq(linkClicks.accountId, accountId),
+        ),
+      );
+  
+    return result[0]?.count ?? 0;
+  }
+
+  export async function getLast24And48HourClicks(accountId: string) {
+    const db = getDb();
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const fortyEightHoursAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+  
+    const result = await db
+      .select({
+        last24Hours: sql<number>`
+          COUNT(CASE
+            WHEN ${linkClicks.clickedTime} > ${twentyFourHoursAgo.toISOString()}
+            THEN 1
+          END)
+        `,
+        previous24Hours: sql<number>`
+          COUNT(CASE
+            WHEN ${linkClicks.clickedTime} <= ${twentyFourHoursAgo.toISOString()}
+            AND ${linkClicks.clickedTime} > ${fortyEightHoursAgo.toISOString()}
+            THEN 1
+          END)
+        `,
+      })
+      .from(linkClicks)
+      .where(
+        and(
+          gt(linkClicks.clickedTime, fortyEightHoursAgo.toISOString()),
+          eq(linkClicks.accountId, accountId),
+        ),
+      );
+  
+    const last24Hours = result[0]?.last24Hours ?? 0;
+    const previous24Hours = result[0]?.previous24Hours ?? 0;
+  
+    let percentChange = 0;
+    if (previous24Hours > 0) {
+      percentChange = Math.round(
+        ((last24Hours - previous24Hours) / previous24Hours) * 100,
+      );
+    } else if (last24Hours > 0) {
+      percentChange = 100;
+    }
+  
+    return {
+      last24Hours,
+      previous24Hours,
+      percentChange,
+    };
+  }
+
+  export async function getLast30DaysClicks(accountId: string) {
+    const db = getDb();
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  
+    const result = await db
+      .select({
+        count: count(),
+      })
+      .from(linkClicks)
+      .where(
+        and(
+          gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()),
+          eq(linkClicks.accountId, accountId),
+        ),
+      );
+  
+    return result[0]?.count ?? 0;
+  }
+
+  export async function getLast30DaysClicksByCountry(accountId: string) {
+    const db = getDb();
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  
+    const result = await db
+      .select({
+        country: linkClicks.country,
+        count: count(linkClicks.id).as("count"),
+      })
+      .from(linkClicks)
+      .where(
+        and(
+          gt(linkClicks.clickedTime, thirtyDaysAgo.toISOString()),
+          eq(linkClicks.accountId, accountId),
+        ),
+      )
+      .groupBy(linkClicks.country)
+      .orderBy(desc(sql`count`));
+  
+    return result;
   }
