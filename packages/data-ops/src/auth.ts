@@ -2,17 +2,17 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { getDb } from "./db/database";
 import { account, session, user, verification } from "./drizzle-out/auth-schema";
-import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
-import { Polar } from "@polar-sh/sdk";
+// import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+// import { Polar } from "@polar-sh/sdk";
 
 type BetterAuthInstance = ReturnType<typeof betterAuth>;
 
 let auth: BetterAuthInstance;
 
-type PolarConfig = {
-    accessToken: string
-    successUrl?: string
-}
+// type PolarConfig = {
+//     accessToken: string
+//     successUrl?: string
+// }
 
 type GoogleOauthConfig = {
     clientId: string
@@ -22,7 +22,7 @@ type GoogleOauthConfig = {
 export function createBetterAuth(
     database: NonNullable<Parameters<typeof betterAuth>[0]>["database"],
     google?: GoogleOauthConfig,
-    polarConfig?: PolarConfig
+    // polarConfig?: PolarConfig
   ): BetterAuthInstance {
     return betterAuth({
       database,
@@ -35,33 +35,33 @@ export function createBetterAuth(
           clientSecret: google?.clientSecret ?? "",
         },
       },
-      plugins: [
-        polar({
-            client: new Polar({
-                accessToken: polarConfig?.accessToken ?? ""
-            }),
-            createCustomerOnSignUp: true,
-            use: [
-                checkout({
-                    products: [
-                        {
-                            productId: "08c9347f-0f13-4201-96cc-da74c3cf9ff6",
-                            slug: "/checkout/datascraper" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Datascraper
-                        }
-                    ],
-                    successUrl: polarConfig?.successUrl ?? "http://localhost:3000/success?checkout_id={CHECKOUT_ID}",
-                    authenticatedUsersOnly: true
-                })
-            ],
-        })
-      ]
+      // plugins: [
+      //   polar({
+      //       client: new Polar({
+      //           accessToken: polarConfig?.accessToken ?? ""
+      //       }),
+      //       createCustomerOnSignUp: true,
+      //       use: [
+      //           checkout({
+      //               products: [
+      //                   {
+      //                       productId: "08c9347f-0f13-4201-96cc-da74c3cf9ff6",
+      //                       slug: "/checkout/datascraper" // Custom slug for easy reference in Checkout URL, e.g. /checkout/Datascraper
+      //                   }
+      //               ],
+      //               successUrl: polarConfig?.successUrl ?? "http://localhost:3000/success?checkout_id={CHECKOUT_ID}",
+      //               authenticatedUsersOnly: true
+      //           })
+      //       ],
+      //   })
+      // ]
     });
   }
 
 
 export function getAuth(
   google: GoogleOauthConfig,
-  polarConfig: PolarConfig
+  // polarConfig: PolarConfig
 ): BetterAuthInstance {
     if (auth) return auth;
   
@@ -75,8 +75,8 @@ export function getAuth(
           verification
         }
       }),
-      google,
-      polarConfig
+      google
+      // polarConfig
     );
     return auth;
 }
