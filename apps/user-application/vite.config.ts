@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig} from "vite";
 import viteReact from "@vitejs/plugin-react";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -18,11 +18,11 @@ export default defineConfig({
     tanstackRouter({ autoCodeSplitting: true }),
     viteReact(),
     tailwindcss(),
-    cloudflare(),
+    cloudflare({ remoteBindings: true }),
   ],
-  server: {
-    watch: {
-      ignored: ["**/.wrangler/state/**"],
+    server: {
+      watch: {
+        ignored: ["**/.wrangler/state/**"],
+      },
     },
-  },
-});
+})

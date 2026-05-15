@@ -23,7 +23,7 @@
       "types": "./dist/zod/*.d.ts",
       "default": "./dist/zod/*.js"
     },
-    "./durable-objects-helpers": {
+    "./durable-objects-helpers/*": {
       "types": "./dist/durable-objects-helpers/*.d.ts",
       "default": "./dist/durable-objects-helpers/*.js"
     },

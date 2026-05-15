@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1778797104716,
+      "tag": "0000_damp_mentallo",
+      "breakpoints": true
+    }
+  ]
+}
