@@ -18,7 +18,18 @@ export default defineConfig({
     tanstackRouter({ autoCodeSplitting: true }),
     viteReact(),
     tailwindcss(),
-    cloudflare(),
+    cloudflare(
+      // When developing code that calls data-service through a Wrangler service
+      // binding, replace the cloudflare() call above with this so Vite starts the
+      // bound worker alongside user-application:
+      //{
+      //   auxiliaryWorkers: [
+      //     {
+      //       configPath: "../data-service/wrangler.jsonc",
+      //     },
+      //   ],
+      // }
+    ),
   ],
   server: {
     watch: {
