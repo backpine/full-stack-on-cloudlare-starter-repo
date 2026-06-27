@@ -35,6 +35,33 @@ npm run dev
 
 This will start the local development server at http://localhost:3000.
 
+### Developing with the data-service Worker
+
+By default the workers will be run in separate sandboxes
+
+If you would like to use a service binding to call functions directly you need to add the worker as an auxiliary Worker entry as shown below
+
+To enable that workflow, update `vite.config.ts` by replacing:
+
+```typescript
+cloudflare(),
+```
+
+with:
+
+```typescript
+cloudflare({
+  auxiliaryWorkers: [
+    {
+      configPath: "../data-service/wrangler.jsonc",
+    },
+  ],
+}),
+```
+
+This only controls local development startup. Add or update the actual service
+binding in `wrangler.jsonc` separately, then regenerate Worker types.
+
 ## Cloudflare Worker Configuration
 
 ### Service Bindings and TypeScript
@@ -44,7 +71,7 @@ This template includes type definitions for Cloudflare Worker bindings. When add
 1. Generate TypeScript types for your bindings:
 
 ```bash
-npm run cf-typegen
+pnpm --filter user-application run cf-typegen
 ```
 
 This will create or update typings for your Cloudflare Worker environment.
@@ -93,13 +120,13 @@ To deploy your application to Cloudflare Workers:
 1. Build the application:
 
 ```bash
-npm run build
+pnpm --filter user-application run build
 ```
 
 2. Deploy to Cloudflare:
 
 ```bash
-npm run deploy
+pnpm --filter user-application run deploy
 ```
 
 
@@ -107,7 +134,7 @@ This will deploy your application to your Cloudflare Workers account. Make sure 
 
 ### Configuration
 
-You can customize your Cloudflare Worker deployment by editing the `wrangler.toml` file. Key configurations include:
+You can customize your Cloudflare Worker deployment by editing the `wrangler.jsonc` file. Key configurations include:
 
 - `name`: The name of your worker
 - `compatibility_date`: The Cloudflare Workers compatibility date
@@ -130,7 +157,7 @@ You can customize your Cloudflare Worker deployment by editing the `wrangler.tom
 │       └── routers/      # Individual tRPC route handlers
 │
 ├── public/               # Static assets
-└── wrangler.toml         # Cloudflare Worker configuration
+└── wrangler.jsonc        # Cloudflare Worker configuration
 ```
 
 ## Additional Resources
